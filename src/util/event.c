@@ -47,7 +47,7 @@ int virEventAddHandle(int fd,
 
     return addHandleImpl(fd, events, cb, opaque, ff);
 }
-
+/* XXX: 18. PowerOn flow */
 void virEventUpdateHandle(int watch, int events) {
     updateHandleImpl(watch, events);
 }
@@ -121,6 +121,7 @@ void virEventRegisterImpl(virEventAddHandleFunc addHandle,
               addTimeout, updateTimeout, removeTimeout);
 
     addHandleImpl = addHandle;
+    /* XXX: 19. Poweron Flow */
     updateHandleImpl = updateHandle;
     removeHandleImpl = removeHandle;
     addTimeoutImpl = addTimeout;
@@ -156,7 +157,7 @@ int virEventRegisterDefaultImpl(void)
 
     virEventRegisterImpl(
         virEventPollAddHandle,
-        virEventPollUpdateHandle,
+        virEventPollUpdateHandle, /* XXX: 19. PowerDon flow */
         virEventPollRemoveHandle,
         virEventPollAddTimeout,
         virEventPollUpdateTimeout,
@@ -166,7 +167,7 @@ int virEventRegisterDefaultImpl(void)
     return 0;
 }
 
-
+/* XXX: 26: one event (virsh cmd) dispatcher */
 /**
  * virEventRunDefaultImpl:
  *

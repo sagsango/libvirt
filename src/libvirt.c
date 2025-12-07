@@ -2493,6 +2493,9 @@ error:
     return -1;
 }
 
+/* XXX: 8. as virsh uses the libvirt 
+ *         tools/virsh.c::cmdReboot() -> here
+ */
 /**
  * virDomainReboot:
  * @domain: a domain object

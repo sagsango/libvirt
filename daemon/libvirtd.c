@@ -2271,7 +2271,7 @@ qemudDispatchServerEvent(int watch, int fd, int events, void *opaque) {
     virMutexUnlock(&server->lock);
 }
 
-
+/* XXX: 25: one event (virsh cmd) dispatcher */
 static int qemudOneLoop(void) {
     sig_atomic_t errors;
 
@@ -2331,6 +2331,7 @@ static void qemudFreeClient(struct qemud_client *client) {
     VIR_FREE(client);
 }
 
+/* XXX: 23: main virsh cmd dispatcher asynchonous */
 static void *qemudRunLoop(void *opaque) {
     struct qemud_server *server = opaque;
     int timerid = -1;
@@ -2385,6 +2386,7 @@ static void *qemudRunLoop(void *opaque) {
         }
 
         virMutexUnlock(&server->lock);
+        /* XXX: 24: handle one event */
         if (qemudOneLoop() < 0) {
             virMutexLock(&server->lock);
             VIR_DEBUG0("Loop iteration error, exiting");
@@ -2469,6 +2471,7 @@ qemudStartEventLoop(struct qemud_server *server)
     /* We want to join the eventloop, so don't detach it */
     /*pthread_attr_setdetachstate(&attr, 1);*/
 
+    /* XXX: 22: just loop in the qemudRunLoop */
     if (pthread_create(&server->eventThread,
                        &attr,
                        qemudRunLoop,
@@ -3369,6 +3372,11 @@ int main(int argc, char **argv) {
         VIR_FORCE_CLOSE(statuswrite);
     }
 
+    /* XXX: 21: This is the main event dispather loop
+     *          all the virsh cmds will be queued as the event
+     *          and those reqest will be dispach by this loop
+     *          asynchoronusly
+     */
     /* Start the event loop in a background thread, since
      * state initialization needs events to be being processed */
     if (qemudStartEventLoop(server) < 0) {

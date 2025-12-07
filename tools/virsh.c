@@ -1970,6 +1970,7 @@ static const vshCmdOptDef opts_reboot[] = {
     {NULL, 0, 0, NULL}
 };
 
+/* XXX: 7. lets see one of the handler cmdReboot */ 
 static int
 cmdReboot(vshControl *ctl, const vshCmd *cmd)
 {
@@ -10653,6 +10654,7 @@ cleanup:
     return ret;
 }
 
+/* XXX: 6. management cmd handlers */
 static const vshCmdDef domManagementCmds[] = {
     {"attach-device", cmdAttachDevice, opts_attach_device, info_attach_device},
     {"attach-disk", cmdAttachDisk, opts_attach_disk, info_attach_disk},
@@ -10708,6 +10710,7 @@ static const vshCmdDef domManagementCmds[] = {
     {NULL, NULL, NULL, NULL}
 };
 
+/* XXX: 6. monitor cmd handlers */
 static const vshCmdDef domMonitoringCmds[] = {
     {"domblkinfo", cmdDomblkinfo, opts_domblkinfo, info_domblkinfo},
     {"domblkstat", cmdDomblkstat, opts_domblkstat, info_domblkstat},
@@ -10719,6 +10722,7 @@ static const vshCmdDef domMonitoringCmds[] = {
     {NULL, NULL, NULL, NULL}
 };
 
+/* XXX: 6. storage pool cmd handlers */
 static const vshCmdDef storagePoolCmds[] = {
     {"find-storage-pool-sources-as", cmdPoolDiscoverSourcesAs,
      opts_find_storage_pool_sources_as, info_find_storage_pool_sources_as},
@@ -10744,6 +10748,7 @@ static const vshCmdDef storagePoolCmds[] = {
     {NULL, NULL, NULL, NULL}
 };
 
+/* XXX: 6. storage vol cmd handlers */
 static const vshCmdDef storageVolCmds[] = {
     {"vol-clone", cmdVolClone, opts_vol_clone, info_vol_clone},
     {"vol-create-as", cmdVolCreateAs, opts_vol_create_as, info_vol_create_as},
@@ -10763,6 +10768,7 @@ static const vshCmdDef storageVolCmds[] = {
     {NULL, NULL, NULL, NULL}
 };
 
+/* XXX: 6. network cmd handlers */
 static const vshCmdDef networkCmds[] = {
     {"net-autostart", cmdNetworkAutostart, opts_network_autostart, info_network_autostart},
     {"net-create", cmdNetworkCreate, opts_network_create, info_network_create},
@@ -10779,6 +10785,10 @@ static const vshCmdDef networkCmds[] = {
     {NULL, NULL, NULL, NULL}
 };
 
+/* XXX: 6. node-device (pci-device) cmd handlers 
+ *         operations on host-level devices (PCI, USB, network, etc.)
+ *         as seen through libvirt’s node device API.
+ */
 static const vshCmdDef nodedevCmds[] = {
     {"nodedev-create", cmdNodeDeviceCreate, opts_node_device_create, info_node_device_create},
     {"nodedev-destroy", cmdNodeDeviceDestroy, opts_node_device_destroy, info_node_device_destroy},
@@ -10790,6 +10800,9 @@ static const vshCmdDef nodedevCmds[] = {
     {NULL, NULL, NULL, NULL}
 };
 
+/* XXX: 6. iface related cmds
+ *         “iface” = host network interface object,
+ */
 static const vshCmdDef ifaceCmds[] = {
     {"iface-define", cmdInterfaceDefine, opts_interface_define, info_interface_define},
     {"iface-destroy", cmdInterfaceDestroy, opts_interface_destroy, info_interface_destroy},
@@ -10803,6 +10816,9 @@ static const vshCmdDef ifaceCmds[] = {
     {NULL, NULL, NULL, NULL}
 };
 
+/* XXX: 6. network filter related cmnds 
+ *      nwfilter = Network Filter objects.
+ */
 static const vshCmdDef nwfilterCmds[] = {
     {"nwfilter-define", cmdNWFilterDefine, opts_nwfilter_define, info_nwfilter_define},
     {"nwfilter-dumpxml", cmdNWFilterDumpXML, opts_nwfilter_dumpxml, info_nwfilter_dumpxml},
@@ -10812,6 +10828,7 @@ static const vshCmdDef nwfilterCmds[] = {
     {NULL, NULL, NULL, NULL}
 };
 
+/* XXX: 6. secrate  related cmnds */
 static const vshCmdDef secretCmds[] = {
     {"secret-define", cmdSecretDefine, opts_secret_define, info_secret_define},
     {"secret-dumpxml", cmdSecretDumpXML, opts_secret_dumpxml, info_secret_dumpxml},
@@ -10822,6 +10839,7 @@ static const vshCmdDef secretCmds[] = {
     {NULL, NULL, NULL, NULL}
 };
 
+/* XXX: 6. basic  cmnds */
 static const vshCmdDef virshCmds[] = {
 #ifndef WIN32
     {"cd", cmdCd, opts_cd, info_cd},
@@ -10836,6 +10854,7 @@ static const vshCmdDef virshCmds[] = {
     {NULL, NULL, NULL, NULL}
 };
 
+/* XXX: 6. snapshot related cmnds */
 static const vshCmdDef snapshotCmds[] = {
     {"snapshot-create", cmdSnapshotCreate, opts_snapshot_create, info_snapshot_create},
     {"snapshot-current", cmdSnapshotCurrent, opts_snapshot_current, info_snapshot_current},
@@ -10846,6 +10865,7 @@ static const vshCmdDef snapshotCmds[] = {
     {NULL, NULL, NULL, NULL}
 };
 
+/* XXX: 6. host and hypervisor related related cmnds */
 static const vshCmdDef hostAndHypervisorCmds[] = {
     {"capabilities", cmdCapabilities, NULL, info_capabilities},
     {"connect", cmdConnect, opts_connect, info_connect},
@@ -10858,6 +10878,7 @@ static const vshCmdDef hostAndHypervisorCmds[] = {
     {NULL, NULL, NULL, NULL}
 };
 
+/* XXX: 6. all the cmd groups */
 static const vshCmdGrp cmdGroups[] = {
     {VSH_CMD_GRP_DOM_MANAGEMENT, "domain", domManagementCmds},
     {VSH_CMD_GRP_DOM_MONITORING, "monitor", domMonitoringCmds},
@@ -11603,6 +11624,7 @@ vshCommandOptSecret(vshControl *ctl, const vshCmd *cmd, const char **name)
     return secret;
 }
 
+/* XXX: 4. exec the virsh cmds */
 /*
  * Executes command(s) and returns return code from last command
  */
@@ -11621,6 +11643,7 @@ vshCommandRun(vshControl *ctl, const vshCmd *cmd)
         if (enable_timing)
             GETTIMEOFDAY(&before);
 
+        /* XXX: 5. call the cmd handler */
         ret = cmd->def->handler(ctl, cmd);
 
         if (enable_timing)
@@ -12710,6 +12733,7 @@ vshParseArgv(vshControl *ctl, int argc, char **argv)
     return TRUE;
 }
 
+/* XXX: 1. start virsh */
 int
 main(int argc, char **argv)
 {
@@ -12771,6 +12795,7 @@ main(int argc, char **argv)
             exit(EXIT_FAILURE);
         }
 
+        /* XXX: 2. Read comds in loop */
         do {
             const char *prompt = ctl->readonly ? VSH_PROMPT_RO : VSH_PROMPT_RW;
             ctl->cmdstr =
@@ -12782,6 +12807,7 @@ main(int argc, char **argv)
                 add_history(ctl->cmdstr);
 #endif
                 if (vshCommandStringParse(ctl, ctl->cmdstr))
+                    /* XXX: 3. Run cmnds */
                     vshCommandRun(ctl, ctl->cmd);
             }
             VIR_FREE(ctl->cmdstr);

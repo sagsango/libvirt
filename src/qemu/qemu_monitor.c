@@ -496,7 +496,7 @@ qemuMonitorIORead(qemuMonitorPtr mon)
     return ret;
 }
 
-
+/* XXX: 17. PowerDown flow */
 static void qemuMonitorUpdateWatch(qemuMonitorPtr mon)
 {
     int events =
@@ -728,7 +728,7 @@ void qemuMonitorClose(qemuMonitorPtr mon)
         qemuMonitorUnlock(mon);
 }
 
-
+/* XXX: 16. PowerDown flow */
 int qemuMonitorSend(qemuMonitorPtr mon,
                     qemuMonitorMessagePtr msg)
 {
@@ -980,7 +980,7 @@ qemuMonitorStopCPUs(qemuMonitorPtr mon)
     return ret;
 }
 
-
+/* XXX: 12. PowerDown */
 int qemuMonitorSystemPowerdown(qemuMonitorPtr mon)
 {
     int ret;

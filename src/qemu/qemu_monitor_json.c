@@ -186,6 +186,19 @@ int qemuMonitorJSONIOProcess(qemuMonitorPtr mon,
     return used;
 }
 
+/*XXX: 15. PowerDown flow
+ *     Remember the Qemu monnitor shell where we can
+ *     interact with the running qemu
+ *
+$ qemu-system-x86_64 -monitor stdio
+ QEMU 7.2.0 monitor - type 'help' for more information
+(qemu) info version
+2.12.0
+(qemu) info registers
+(qemu) sendkey ctrl-alt-delete
+(qemu) system_powerdown
+(qemu) quit
+*/
 static int
 qemuMonitorJSONCommandWithFd(qemuMonitorPtr mon,
                              virJSONValuePtr cmd,
@@ -213,6 +226,7 @@ qemuMonitorJSONCommandWithFd(qemuMonitorPtr mon,
 
     VIR_DEBUG("Send command '%s' for write with FD %d", cmdstr, scm_fd);
 
+    /* XXX: send command */
     ret = qemuMonitorSend(mon, &msg);
 
     VIR_DEBUG("Receive command reply ret=%d errno=%d %d bytes '%s'",
@@ -246,7 +260,7 @@ cleanup:
     return ret;
 }
 
-
+/* XXX: 14. PowerDown */
 static int
 qemuMonitorJSONCommand(qemuMonitorPtr mon,
                        virJSONValuePtr cmd,
@@ -851,7 +865,7 @@ qemuMonitorJSONStopCPUs(qemuMonitorPtr mon)
     return ret;
 }
 
-
+/* XXX: 13. PowerDown */
 int qemuMonitorJSONSystemPowerdown(qemuMonitorPtr mon)
 {
     int ret;
@@ -1445,6 +1459,9 @@ cleanup:
     return ret;
 }
 
+/* XXX: 40: All the calls should endup like this
+ *          and we will make JasonCommands for the qemu
+ */
 /*
  * Returns: 0 if balloon not supported, +1 if balloon adjust worked
  * or -1 on failure

@@ -74,15 +74,16 @@ struct virEventPollTimeout {
    records in this multiple */
 #define EVENT_ALLOC_EXTENT 10
 
+/* XXX: 20. all the event handlers */
 /* State for the main event loop */
 struct virEventPollLoop {
     virMutex lock;
     int running;
     virThread leader;
     int wakeupfd[2];
-    size_t handlesCount;
+    size_t handlesCount; /* XXX: 20: total event handel */
     size_t handlesAlloc;
-    struct virEventPollHandle *handles;
+    struct virEventPollHandle *handles; /* XXX:  20: all the event handles */
     size_t timeoutsCount;
     size_t timeoutsAlloc;
     struct virEventPollTimeout *timeouts;
@@ -138,6 +139,7 @@ int virEventPollAddHandle(int fd, int events,
     return watch;
 }
 
+/* XXX: 19. PowerDown flow */
 void virEventPollUpdateHandle(int watch, int events) {
     int i;
     EVENT_DEBUG("Update handle w=%d e=%d", watch, events);
@@ -384,6 +386,8 @@ static struct pollfd *virEventPollMakePollFDs(int *nfds) {
 }
 
 
+/* XXX: 29: dispach timers before the dispatch of 
+ *      the event handlers */
 /*
  * Iterate over all timers and determine if any have expired.
  * Invoke the user supplied callback for each timer whose
@@ -436,7 +440,7 @@ static int virEventPollDispatchTimeouts(void) {
     return 0;
 }
 
-
+/* XXX: 31: Dispath the event handler here */
 /* Iterate over all file handles and dispatch any which
  * have pending events listed in the poll() data. Invoke
  * the user supplied callback for each handle which has
@@ -478,6 +482,7 @@ static int virEventPollDispatchHandles(int nfds, struct pollfd *fds) {
             EVENT_DEBUG("Dispatch n=%d f=%d w=%d e=%d %p", i,
                         fds[n].fd, watch, fds[n].revents, opaque);
             virMutexUnlock(&eventLoop.lock);
+            /* XXX: here is the dispach of the event handler */
             (cb)(watch, fds[n].fd, hEvents, opaque);
             virMutexLock(&eventLoop.lock);
         }
@@ -579,6 +584,7 @@ static void virEventPollCleanupHandles(void) {
     }
 }
 
+/* XXX: 27: one event (virsh cmd) dispatcher*/
 /*
  * Run a single iteration of the event loop, blocking until
  * at least one file handle has an event, or a timer expires
@@ -615,10 +621,12 @@ int virEventPollRunOnce(void) {
     EVENT_DEBUG("Poll got %d event(s)", ret);
 
     virMutexLock(&eventLoop.lock);
+    /* XXX: 28: dispatch timers */
     if (virEventPollDispatchTimeouts() < 0)
         goto error;
 
     if (ret > 0 &&
+        /* XXX: 30: Dispatch the event handler finally */
         virEventPollDispatchHandles(nfds, fds) < 0)
         goto error;
 

@@ -516,6 +516,7 @@ typedef int
                                unsigned int flags);
 
 
+/* XXX: 9. virDriver */
 /**
  * _virDriver:
  *

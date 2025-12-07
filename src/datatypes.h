@@ -139,6 +139,7 @@
 # define VIR_IS_SNAPSHOT(obj)              ((obj) && (obj)->magic==VIR_SNAPSHOT_MAGIC)
 # define VIR_IS_DOMAIN_SNAPSHOT(obj)    (VIR_IS_SNAPSHOT(obj) && VIR_IS_DOMAIN((obj)->domain))
 
+/* XXX: 9: virConnect */
 /**
  * _virConnect:
  *
@@ -153,6 +154,7 @@ struct _virConnect {
     int flags;              /* a set of connection flags */
     xmlURIPtr uri;          /* connection URI */
 
+    /* XXX: All the dirver it has */
     /* The underlying hypervisor driver and network driver. */
     virDriverPtr      driver;
     virNetworkDriverPtr networkDriver;
@@ -190,6 +192,7 @@ struct _virConnect {
     int refs;                 /* reference count */
 };
 
+/* XXX: virDomain */
 /**
 * _virDomain:
 *

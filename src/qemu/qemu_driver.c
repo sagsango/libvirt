@@ -1422,6 +1422,7 @@ cleanup:
 }
 
 
+/* XXX: 11. Qemu DomainShutdown */
 static int qemudDomainShutdown(virDomainPtr dom) {
     struct qemud_driver *driver = dom->conn->privateData;
     virDomainObjPtr vm;
@@ -6811,7 +6812,7 @@ cleanup:
     return ret;
 }
 
-
+/* XXX: 9. Qemu driver */
 static virDriver qemuDriver = {
     VIR_DRV_QEMU,
     "QEMU",
@@ -6834,8 +6835,8 @@ static virDriver qemuDriver = {
     qemudDomainLookupByName, /* domainLookupByName */
     qemudDomainSuspend, /* domainSuspend */
     qemudDomainResume, /* domainResume */
-    qemudDomainShutdown, /* domainShutdown */
-    NULL, /* domainReboot */
+    qemudDomainShutdown, /* domainShutdown */ /* XXX: 10. we will look shutdown */
+    NULL, /* domainReboot */ /* XXX: 10. for qemu we dont have reboot */
     qemudDomainDestroy, /* domainDestroy */
     qemudDomainGetOSType, /* domainGetOSType */
     qemudDomainGetMaxMemory, /* domainGetMaxMemory */
