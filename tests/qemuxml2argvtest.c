@@ -266,6 +266,15 @@ mymain(int argc, char **argv)
      *      please see the macro of DO_TEST
      *      for here name of the test is "minimal"
      *      xml used : qemuxml2argvdata/qemuxml2argv-minimal.xml
+     *
+     *
+     *      xml will be used by the libvirt
+     *      now libvirt will see domain type=quemu
+     *      it will pass it to the "src/qemu"
+     *      now "src/qemu" will parse the xml and make
+     *      the commands for the qemu-monitor,
+     *      so xml will be converted into multiple 
+     *      qemu monitor commands
      */
     DO_TEST("minimal", false, QEMU_CAPS_NAME);
     DO_TEST("machine-aliases1", false, NONE);
