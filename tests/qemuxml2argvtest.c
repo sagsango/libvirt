@@ -261,6 +261,12 @@ mymain(int argc, char **argv)
     unsetenv("QEMU_AUDIO_DRV");
     unsetenv("SDL_AUDIODRIVER");
 
+    /* XXX: these are the tests
+     *      which tests the xml
+     *      please see the macro of DO_TEST
+     *      for here name of the test is "minimal"
+     *      xml used : qemuxml2argvdata/qemuxml2argv-minimal.xml
+     */
     DO_TEST("minimal", false, QEMU_CAPS_NAME);
     DO_TEST("machine-aliases1", false, NONE);
     DO_TEST("machine-aliases2", true, NONE);
